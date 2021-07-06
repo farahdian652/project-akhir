@@ -1,0 +1,43 @@
+<div *ngIf='showError' #alert class="alert alert-danger alert-dismissible fade show auth-alert" role="alert">
+    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{errorMessage}}
+</div>
+
+<div class="container center-page col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 lh-1">Sanggar Tari</h1>
+        <h1 class="display-4 fw-bold lh-1 mb-3">Ngesti Budoyo</h1>
+        <p class="col-lg-10 fs-4">Sistem Informasi sanggar seni tari sebagai pengelola yayasan seni yang secara konsisten melestarikan, melatih, mendidik, dan mengembangkan Seni dan Budaya Tradisional Indonesia.</p>
+      </div>
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form #formData='ngForm' class="p-4 p-md-5 border-black rounded-3" (ngSubmit)="tapRegister(formData)">
+            <h1 class="display-4 text-right fw-bold lh-1">Sign Up</h1> 
+            <div class="form-floating mb-3">
+                <input type="username" class="form-control" id="username" placeholder="John" name="username" [(ngModel)]="register.username" required>
+                <label for="username">Username</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="email address" name="email" [(ngModel)]="register.email" required>
+                <label for="email">Email address</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" placeholder="password" name="password" [(ngModel)]="register.password" required>
+                <label for="password">Password</label>
+             </div>
+             <div class="form-floating mb-3">
+                <input type="tel" class="form-control" id="phone" placeholder="+62892929xxx" name="phone" [(ngModel)]="register.phone" required>
+                <label for="phone">Phone</label>
+             </div>
+          <button class="w-100 btn btn-lg btn-primary" type="submit" [disabled]="!formData.valid">Sign up</button>
+          <hr class="my-4">
+          <div class="text-center">
+          <button type="button" class="btn btn-link mt-2" routerLink="/signin">Sudah punya akun ?</button>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
