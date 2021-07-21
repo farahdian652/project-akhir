@@ -8,17 +8,17 @@ import { DatePipe } from '@angular/common';
 
 
 @Component({
-  selector: 'app-peserta-didik',
-  templateUrl: './peserta-didik.component.html',
-  styleUrls: ['./peserta-didik.component.scss']
+  selector: 'app-events',
+  templateUrl: './events.component.html',
+  styleUrls: ['./events.component.scss']
 })
-export class PesertaDidikComponent implements OnInit {
+export class EventsComponent implements OnInit {
   dataForm: any = {}
   listData: any = {}
 
   imgSrc: string = "assets/add-image.png";
   imgUrl: string = "";
-  idPesertaDidik?: string;
+  idData?: string;
   selectedImage?: string;
   now: number = Date.now();
 
@@ -43,7 +43,7 @@ export class PesertaDidikComponent implements OnInit {
 
   cleanData() {
     this.dataForm = {};
-    this.idPesertaDidik = null;
+    this.idData = null;
     this.imgSrc = "assets/add-image.png";
     this.loading = false;
     this.selectedImage!;
@@ -53,13 +53,12 @@ export class PesertaDidikComponent implements OnInit {
     this.loading = true;
     this.dataForm['created_at'] = this.datePipe.transform(this.now, 'MMM d, y, h:mm:ss a');
 
-    if(this.imgUrl == "" && this.idPesertaDidik != null) {
-      this.fire.collection('peserta-didik').doc(this.idPesertaDidik).update(this.dataForm);
+    if(this.imgUrl == "" && this.idData != null) {
+      this.fire.collection('events').doc(this.idData).update(this.dataForm);
       this.cleanData();
-      this.showMessage = true;
     } else {
       console.log('tambah')
-      var path = `peserta-didik/${this.imgUrl.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
+      var path = `events/${this.imgUrl.split('.').slice(0, -1).join('.')}_${new Date().getTime()}`;
       var file = this.storage.ref(path);
 
       this.storage.upload(path, this.selectedImage).snapshotChanges().pipe(
@@ -67,18 +66,21 @@ export class PesertaDidikComponent implements OnInit {
           file.getDownloadURL().subscribe((url) => {
             this.dataForm['image_url'] = url;
 
-            if(this.idPesertaDidik != null) {
-              this.fire.collection('peserta-didik').doc(this.idPesertaDidik).update(this.dataForm);
+            if(this.idData != null) {
+              console.log('edit')
+
+              this.fire.collection('events').doc(this.idData).update(this.dataForm);
             }
             else {
-              this.fire.collection('peserta-didik').add(this.dataForm);
+              console.log('tambah')
+              this.fire.collection('events').add(this.dataForm);
             }
-            this.showMessage = true;
             this.cleanData();
           })
         ))
       ).subscribe()
     }
+    this.showMessage = true;
   }
 
   getImage(url: any) {
@@ -94,7 +96,7 @@ export class PesertaDidikComponent implements OnInit {
   }
 
   getData() {
-    this.fire.collection('peserta-didik', ref => ref.orderBy('created_at', 'desc')).snapshotChanges().subscribe((resp) => {
+    this.fire.collection('events', ref => ref.orderBy('created_at', 'desc')).snapshotChanges().subscribe((resp) => {
       this.listData = resp
       this.loadData = false;
 
@@ -105,7 +107,7 @@ export class PesertaDidikComponent implements OnInit {
   }
 
   detail(data: any, id: string) {
-    this.idPesertaDidik = id;
+    this.idData = id;
     this.dataForm = data;
     this.imgSrc = data['image_url'];
   }
@@ -116,14 +118,15 @@ export class PesertaDidikComponent implements OnInit {
     
     if(_confirm) {
       this.fire
-      .collection("peserta-didik")
-      .doc(this.idPesertaDidik)
+      .collection("events")
+      .doc(this.idData)
       .delete().then(mod => {
         this.loading = false;
       });
     } else {
       this.loading = true;
     }
+    this.showMessage = true;
     this.cleanData();
   }
 

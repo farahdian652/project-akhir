@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PengajarComponent } from './pengajar/pengajar.component';
 import { DetailUserComponent } from './detail-user/detail-user.component';
@@ -7,9 +8,11 @@ import { environment } from './../../environments/environment';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { EventsComponent } from './events/events.component';
 
 const routes: Routes = [
   {
@@ -33,6 +36,10 @@ const routes: Routes = [
         component: PengajarComponent
       },
       {
+        path: 'events',
+        component: EventsComponent
+      },
+      {
         path: '',
         redirectTo: '/dashboard',
         pathMatch: 'full'
@@ -48,12 +55,18 @@ const routes: Routes = [
     PesertaDidikComponent,
     DetailUserComponent,
     PengajarComponent,
+    EventsComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    NgbModule,
+    FlexLayoutModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    NgbModule
-  ]
+  ],
+  providers: [
+    DatePipe
+  ],
 })
 export class AdminModule { }

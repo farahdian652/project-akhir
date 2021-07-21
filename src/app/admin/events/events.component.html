@@ -1,6 +1,6 @@
 <div [ngClass]="{'loading': loading}">
     <div *ngIf="showMessage" #alert class="alert mx-4 shadow alert-success fixed-bottom alert-dismissible fade show" role="alert">
-      <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+      <button type="button" class="close cursor-pointer" aria-label="Close" (click)="closeAlert()">
           <span aria-hidden="true">&times;</span>
       </button>
       Data berhasil diperbarui !
@@ -9,8 +9,8 @@
     <form #formData='ngForm' (ngSubmit)="tambah()">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <div class="row m-0 align-items-center">
-          <h1 class="h2">Data Peserta Didik</h1>
-          <ng-container *ngIf="idPesertaDidik != null">
+          <h1 class="h2">Data Events</h1>
+          <ng-container *ngIf="idData != null">
             <div class="mx-4">
               <button type="button" class="btn btn-sm btn-danger cursor-pointer" (click)="collapse.toggle()" (click)="delete()" [disabled]="loading" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
                 Hapus
@@ -58,32 +58,36 @@
                         <div class="form-group">
                           <input #fileUpload type="file" accept="image/*" class="form-control-file" id="image" size="20" (change)="getImage($event)" required hidden [disabled]="loading">
                           <small id="fileHelp" class="form-text text-muted">
-                              (click) gambar untuk merubah foto peserta didik.
+                              (click) gambar untuk merubah foto.
                           </small>
                         </div>
                       </div>
                     </div>
   
                     <div class="col-md-8">
-                      <div class="mb-3">
-                        <label for="name" class="form-label">Nama</label>
-                        <input type="text" class="form-control"  name="name" id="name" placeholder="Masukkan nama pengajar" [(ngModel)]="dataForm.name" required>
-                      </div>
-
-                      <div class="mb-3">
-                          <label for="email" class="form-label">Email</label>
-                          <input type="email" class="form-control" name="email"  id="email" placeholder="Email pengajar" [(ngModel)]="dataForm.email" required>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nama Tarian</label>
+                            <input type="text" class="form-control"  name="name" id="name" placeholder="Masukkan nama tarian" [(ngModel)]="dataForm.tarian" required>
                         </div>
+                      
+                        <div class="mb-3">
+                          <label for="acara" class="form-label">Acara</label>
+                          <input type="text" class="form-control" name="acara"  id="acara" placeholder="Masukkan acara" [(ngModel)]="dataForm.acara" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="acara" class="form-label">Tanggal</label>
+                            <input class="form-control" placeholder="yyyy-mm-dd"
+                                   name="dp" [(ngModel)]="dataForm.tanggal" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+                        </div>
+
+                        
             
                         <div class="mb-3">
-                            <label for="phone" class="form-label">Telepon</label>
-                            <input type="tel" class="form-control" name="phone" id="phone" aria-describedby="phoneHelp" placeholder="Nomor telepon pengguna" [(ngModel)]="dataForm.telepon" required>
+                            <label for="desc" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" placeholder="Berikan deskripsi acara" rows="5" [(ngModel)]="dataForm.description" name="description" [disabled]="loading" style="height: auto;" required></textarea>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="alamat" class="form-label">Alamat</label>
-                            <input type="text" class="form-control"  name="alamat" id="alamat" placeholder="Masukkan alamat pengajar" [(ngModel)]="dataForm.alamat" required>
-                        </div>
                     </div>
                   </div>
                 </div>
@@ -104,31 +108,16 @@
     <div *ngIf="isEmpty && !loadData" class="text-center m-4" [ngClass]="{'loading': !isCollapsed}">
       <h4>Data kosong !</h4>
     </div>
-    
-    <div *ngIf="!isEmpty" class="table-responsive" [ngClass]="{'loading': !isCollapsed}">
-      <table class="table table-hover my-5 table-sm">
-        <thead>
-          <tr>
-            <th scope="col">No</th>
-            <th scope="col"></th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Telepon</th>
-            <th scope="col">Alamat</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of listData; let idx=index" class="cursor-pointer" (click)="isCollapsed ? detail(data.payload.doc.data(), data.payload.doc.id) : null" (click)="isCollapsed ? collapse.toggle() : null">
-            <td style="width:  2.33%">{{ idx + 1 }}</td>
-            <td class="w-7">
-                <img [src]="data.payload.doc.data().image_url" class="img-fluid img-thumbnail">
-            </td>
-            <td>{{ data.payload.doc.data().name }}</td>
-            <td>{{ data.payload.doc.data().email }}</td>
-            <td>{{ data.payload.doc.data().telepon }}</td>
-            <td>{{ data.payload.doc.data().alamat }}</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div *ngIf="!isEmpty" class="row my-5" [ngClass]="{'loading': !isCollapsed}">
+        <div class="col-md-3 col-sm-6" *ngFor="let dt of listData">
+            <div class="card m-2 cursor-pointer card-event"  (click)="isCollapsed ? detail(dt.payload.doc.data(), dt.payload.doc.id) : null" (click)="isCollapsed ? collapse.toggle() : null">
+                <img class="card-img-top" [src]="dt.payload.doc.data().image_url" alt="">
+                <div class="card-body">
+                  <h5 class="card-title">{{ dt.payload.doc.data().name }}</h5>
+                  <p class="card-text">{{ dt.payload.doc.data().description }}.</p>
+                </div>
+            </div>
+        </div>
     </div>
   </div>

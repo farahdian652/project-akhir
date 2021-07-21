@@ -17,26 +17,31 @@
             <div class="position-sticky pt-3 mb-auto">
               <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link" [routerLinkActive]="['active']" routerLink="dashboard">
+                  <a class="nav-link" [routerLinkActive]="['active']" routerLink="/dashboard">
                     Dashboard
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" routerLink="peserta-didik" [routerLinkActive]="['active']">
-                        Peserta didik
+                  <a class="nav-link" routerLink="/events" [routerLinkActive]="['active']">
+                      Events
                   </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="pengajar" [routerLinkActive]="['active']">
-                        Pengajar
-                    </a>
+                  <a class="nav-link" routerLink="/pengajar" [routerLinkActive]="['active']">
+                      Pengajar
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" routerLink="/peserta-didik" [routerLinkActive]="['active']">
+                        Peserta didik
+                  </a>
                 </li>
                 <li class="nav-item">
                     <hr class="my-4">
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="detail-user" [routerLinkActive]="['active']">
-                      Setting
+                    <a class="nav-link" routerLink="/detail-user" [routerLinkActive]="['active']">
+                      Pengaturan
                     </a>
                 </li>
               </ul>

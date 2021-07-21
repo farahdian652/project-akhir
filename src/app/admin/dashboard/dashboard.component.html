@@ -1,6 +1,84 @@
-<p>dashboard works!</p>
-<p>dashboard works!</p>
-<p>dashboard works!</p>
-<p>dashboard works!</p>
-<p>dashboard works!</p>
-<p>dashboard works!</p>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2">
+    <h1 class="h2">Dashboard</h1>
+</div>
+
+<div *ngIf="loading" class="text-center my-4">
+    <div class="text-center">
+        <h2>Memuat data . . .</h2>
+    </div>
+</div>
+  
+<ng-container *ngIf="!loading">
+    <div class="container head-dashboard">
+        <div class="row justify-content-center align-items-center g-5 p-5">
+            <div class="col-md-6">
+                <p class="lead mb-3">Selamat datang kembali,</p>
+                <h1 class="display-5 fw-bold lh-1">{{ username }}</h1>
+                </div>
+                <div class="ml-auto">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 cursor-pointer" routerLink="/product-list">Tambah event baru</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container my-2">
+        <div class="row justify-content-center">
+            <div class="col-md-4 col-sm-6 mb-3">
+                <div class="card">
+                    <div class="card-header text-right">
+                        Total Pengajar
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text h2">{{ totalPengajar }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 mb-3">
+                <div class="card">
+                    <div class="card-header text-right">
+                        Total Peserta Didik
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text h2">{{ totalPeserta }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3 col-sm-6">
+                <div class="card">
+                    <div class="card-header text-right">
+                        Total Event
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text h2">{{ totalEvent }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div *ngIf="!emptyEvent" class="table-responsive">
+            <table class="table my-5">
+                <caption>List 5 event terbaru</caption>
+                <thead>
+                    <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Tarian</th>
+                    <th scope="col">Acara</th>
+                    <th scope="col">Tanggal</th>
+                    <th scope="col">Deskripsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of listEvent; let idx=index">
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ data.payload.doc.data().tarian }}</td>
+                    <td>{{ data.payload.doc.data().acara }}</td>
+                    <td>{{ data.payload.doc.data().created_at }}</td>
+                    <td>{{ data.payload.doc.data().description }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-container>

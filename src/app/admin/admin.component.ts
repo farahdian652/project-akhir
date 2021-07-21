@@ -20,7 +20,7 @@ export class AdminComponent implements OnInit {
   ) { 
     auth.authState.subscribe(resp => {
       if (!resp) {
-        router.navigateByUrl('/auth')
+        router.navigateByUrl('auth')
       }
     })
 

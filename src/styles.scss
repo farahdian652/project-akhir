@@ -3,10 +3,6 @@
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 
-::placeholder {
-  color: transparent !important;
-}
-
 @media (min-width: 992px) {
   .g-lg-5,
   .gx-lg-5 {
@@ -106,4 +102,26 @@
 
 .loading {
   opacity: 0.2;
+}
+
+.cursor-pointer:hover {
+  cursor: pointer !important;
+}
+
+.table th,
+.table td {
+  vertical-align: middle !important;
+}
+
+.w-7 {
+  width: 5% !important;
+}
+
+.card-event {
+  transition: transform 0.3s cubic-bezier(0.34, 2, 0.6, 1), box-shadow 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 0 10px #024f8050;
+  }
 }
