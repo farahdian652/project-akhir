@@ -5,13 +5,13 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyBTZW5bNMaUFjC7cGv931ANUogujHAm0mA",
-    authDomain: "sanggar-tari-c8b9e.firebaseapp.com",
-    projectId: "sanggar-tari-c8b9e",
-    storageBucket: "sanggar-tari-c8b9e.appspot.com",
-    messagingSenderId: "987997470809",
-    appId: "1:987997470809:web:7ddb059b6698d1a5487148",
-    measurementId: "G-LS0ZZ57YNB"
+    apiKey: "AIzaSyDJiH7wH_4hL1SI0uxTzj-V6hCSYEmeuJ4",
+    authDomain: "project-akhir-farah.firebaseapp.com",
+    projectId: "project-akhir-farah",
+    storageBucket: "project-akhir-farah.appspot.com",
+    messagingSenderId: "62897738539",
+    appId: "1:62897738539:web:ad416c518653e299c62b6e",
+    measurementId: "G-867NXMSPKP"
   }
 };
 
